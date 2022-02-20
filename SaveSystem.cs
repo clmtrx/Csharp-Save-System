@@ -8,7 +8,7 @@ namespace ClimatrixSave{
         //Enter Your Save Path here vv
         private static string savePath => "here!";
         private static List<string> saveContent { get {
-            if (!File.Exists(savePath)) File.Create(savePath);
+            if (!File.Exists(savePath)) File.Create(savePath).Dispose();
             return File.ReadAllLines(savePath).ToList<string>();
         } }
 
@@ -27,19 +27,18 @@ namespace ClimatrixSave{
                         File.WriteAllLines(savePath, newSave);
                     }    
         }
-        
+
         public static T ReadData<T>(string key, T def){
-            for(int i = 0; i < saveContent.Count; i++){
-                if (!saveContent.Contains(key + ":")){
-                    var newSave = saveContent;
-                    newSave.Add(key+":"+def.ToString());
+            if (!saveContent.Contains(key + ":")){
+                var newSave = saveContent;
+                newSave.Add(key+":"+def.ToString());
 
-                    File.WriteAllLines(savePath, newSave);
-                    return def;
-                }
-
-                if (saveContent[i].StartsWith(key + ":")) return (T)GetKeyContent(saveContent, key, i);
+                File.WriteAllLines(savePath, newSave);
+                return def;
             }
+
+            for(int i = 0; i < saveContent.Count; i++)
+                if (saveContent[i].StartsWith(key + ":")) return (T)GetKeyContent(saveContent, key, i);
 
             return def;
         }
