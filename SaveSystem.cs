@@ -1,7 +1,6 @@
 using System.Linq;
 using System.IO;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace ClimatrixSave{
     public static class SaveSystem
