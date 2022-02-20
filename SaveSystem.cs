@@ -8,7 +8,10 @@ namespace ClimatrixSave{
     {
         //Enter Your Save Path here vv
         private static string savePath => "here!";
-        private static List<string> saveContent { get { return File.ReadAllLines(savePath).ToList<string>(); } }
+        private static List<string> saveContent { get {
+            if (!File.Exists(savePath)) File.Create(savePath);
+            return File.ReadAllLines(savePath).ToList<string>();
+        } }
 
         public static void SaveData<T>(string key, T data){
             if (!saveContent.Contains(key + ":")){
