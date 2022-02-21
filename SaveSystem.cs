@@ -13,7 +13,7 @@ namespace ClimatrixSave{
 
             if (saveContent.FirstOrDefault(str => str.StartsWith(key + ":")) == null){
                 var newSave = saveContent;
-                newSave.Add(key+":"+data.ToString() + "\n");
+                newSave.Add(key+":"+data.ToString());
 
                 File.WriteAllLines(savePath, newSave);
             }
@@ -29,7 +29,7 @@ namespace ClimatrixSave{
         public static T ReadData<T>(string key, T def){
             if (saveContent.FirstOrDefault(str => str.StartsWith(key + ":")) == null){
                 var newSave = saveContent;
-                newSave.Add(key+":"+def.ToString()+"\n");
+                newSave.Add(key+":"+def.ToString());
 
                 File.WriteAllLines(savePath, newSave);
                 return def;
